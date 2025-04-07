@@ -1,0 +1,135 @@
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Search,
+  Upload,
+  User,
+  ThumbsUp,
+  MessageCircle,
+  ListVideo,
+  LogIn,
+  LogOut,
+  UserPlus,
+  PlayCircle,
+  Home as HomeIcon,
+  Tv as TvIcon,
+  Clock as ClockIcon,
+  Bookmark as BookmarkIcon,
+  Heart as HeartIcon
+} from "lucide-react";
+
+export default function Home() {
+  const [currentPage, setCurrentPage] = useState("home"); // Track the current page
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "home":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map((video) => (
+              <Card key={video} className="rounded-2xl shadow">
+                <CardContent className="p-0">
+                  <img
+                    src={`https://placehold.co/600x340?text=Video+${video}`}
+                    alt={`Video ${video}`}
+                    className="rounded-t-2xl"
+                  />
+                  <div className="p-4">
+                    <h2 className="font-semibold text-lg">Video Title {video}</h2>
+                    <p className="text-sm text-gray-500">1k views • 2 days ago</p>
+                    <div className="flex gap-2 mt-2">
+                      <Button variant="ghost" size="icon"><PlayCircle className="w-4 h-4" /></Button>
+                      <Button variant="ghost" size="icon"><ThumbsUp className="w-4 h-4" /></Button>
+                      <Button variant="ghost" size="icon"><MessageCircle className="w-4 h-4" /></Button>
+                      <Button variant="ghost" size="icon"><ListVideo className="w-4 h-4" /></Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        );
+      case "shorts":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3].map((video) => (
+              <Card key={video} className="rounded-2xl shadow">
+                <CardContent className="p-0">
+                  <img src={`https://placehold.co/600x340?text=Shorts+${video}`}
+                    alt={`Shorts ${video}`}
+                    className="rounded-t-2xl"
+                  />
+                  <div className="p-4">
+                    <h2 className="font-semibold text-lg">Shorts Title {video}</h2>
+                    <p className="text-sm text-gray-500">500 views • 1 hour ago</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        );
+      case "subscriptions":
+        return (
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Subscriptions</h2>
+            <p>Show videos from your subscribed channels here...</p>
+          </div>
+        );
+      case "history":
+        return (
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Watch History</h2>
+            <p>Display videos you've watched recently...</p>
+          </div>
+        );
+      case "watchLater":
+        return (
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Watch Later</h2>
+            <p>Display videos saved to Watch Later...</p>
+          </div>
+        );
+      case "likedVideos":
+        return (
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Liked Videos</h2>
+            <p>Display videos you've liked...</p>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4">
+      {/* Navbar */}
+      <div className="flex justify-between items-center p-4 bg-white shadow rounded-2xl mb-4">
+        <div className="text-2xl font-bold">MyTube</div>
+        <div className="flex items-center gap-2">
+          <Input placeholder="Search videos..." className="w-64" />
+          <Button size="icon" variant="outline"><Search /></Button>
+          <Button size="icon" variant="outline"><Upload /></Button>
+          <Button size="icon" variant="outline"><User /></Button>
+          <Button size="icon" variant="outline"><LogIn /></Button>
+          <Button size="icon" variant="outline"><LogOut /></Button>
+          <Button size="icon" variant="outline"><UserPlus /></Button>
+        </div>
+      </div>
+
+      {/* Sidebar Navigation */}
+      <div className="flex gap-4 mb-4">
+        <Button variant="outline" onClick={() => setCurrentPage("home")}><HomeIcon className="w-6 h-6" /> Home</Button>
+        <Button variant="outline" onClick={() => setCurrentPage("shorts")}><TvIcon className="w-6 h-6" /> Shorts</Button> <Button variant="outline" onClick={() => setCurrentPage("subscriptions")}><ListVideo className="w-6 h-6" /> Subscriptions</Button>
+        <Button variant="outline" onClick={() => setCurrentPage("history")}><ClockIcon className="w-6 h-6" /> History</Button>
+        <Button variant="outline" onClick={() => setCurrentPage("watchLater")}><BookmarkIcon className="w-6 h-6" /> Watch Later</Button>
+        <Button variant="outline" onClick={() => setCurrentPage("likedVideos")}><HeartIcon className="w-6 h-6" /> Liked Videos</Button>
+      </div>
+
+      {/* Render the Current Page */}
+      {renderPage()}
+    </div> 
+  );
+}
